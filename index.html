@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MaAM Operations Dashboard</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        background: #f5f6fa;
+        color: #2c3e50;
+        padding: 24px;
+    }
+    .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 24px;
+        padding-bottom: 16px;
+        border-bottom: 2px solid #3498db;
+    }
+    .header h1 { font-size: 24px; color: #2c3e50; }
+    .header-meta { text-align: right; font-size: 13px; color: #7f8c8d; }
+    .grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+        margin-bottom: 20px;
+    }
+    .panel {
+        background: #fff;
+        border-radius: 8px;
+        padding: 20px;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+    .panel-full { grid-column: 1 / -1; }
+    .panel h2 {
+        font-size: 16px;
+        color: #34495e;
+        margin-bottom: 16px;
+        padding-bottom: 8px;
+        border-bottom: 1px solid #ecf0f1;
+    }
+    .chart-container {
+        position: relative;
+        max-width: 280px;
+        margin: 0 auto;
+    }
+    .fleet-legend {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-top: 16px;
+        justify-content: center;
+    }
+    .legend-item {
+        font-size: 13px;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+    }
+    .legend-dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        display: inline-block;
+    }
+    .big-num {
+        font-size: 48px;
+        font-weight: 700;
+        color: #e74c3c;
+        line-height: 1;
+    }
+    .big-num-label {
+        font-size: 13px;
+        color: #7f8c8d;
+        margin-top: 4px;
+    }
+    .ar-stats {
+        display: flex;
+        gap: 24px;
+        margin-bottom: 16px;
+    }
+    .ar-stat { text-align: center; }
+    .ar-stat .num {
+        font-size: 36px;
+        font-weight: 700;
+        line-height: 1;
+    }
+    .ar-stat .num.open { color: #e74c3c; }
+    .ar-stat .num.in-progress { color: #f39c12; }
+    .ar-stat .label {
+        font-size: 12px;
+        color: #7f8c8d;
+        margin-top: 4px;
+    }
+    .age-row {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-bottom: 6px;
+    }
+    .age-label { font-size: 12px; width: 80px; text-align: right; color: #7f8c8d; }
+    .age-bar-bg {
+        flex: 1;
+        height: 16px;
+        background: #ecf0f1;
+        border-radius: 3px;
+        overflow: hidden;
+    }
+    .age-bar { height: 100%; border-radius: 3px; transition: width 0.3s; }
+    .age-count { font-size: 13px; font-weight: 600; width: 24px; }
+    .badge {
+        display: inline-block;
+        padding: 3px 8px;
+        font-size: 11px;
+        font-weight: 600;
+        border-radius: 4px;
+        background: #ecf0f1;
+        color: #2c3e50;
+        margin: 2px 2px;
+    }
+    .badge-mock { background: #ffeaa7; color: #d35400; }
+    .badge-live { background: #00b894; color: #fff; }
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 13px;
+    }
+    th {
+        text-align: left;
+        padding: 8px 12px;
+        background: #f8f9fa;
+        border-bottom: 2px solid #dee2e6;
+        font-weight: 600;
+        color: #495057;
+    }
+    td {
+        padding: 8px 12px;
+        border-bottom: 1px solid #ecf0f1;
+    }
+    tr:hover { background: #f8f9fa; }
+    .num { text-align: right; font-variant-numeric: tabular-nums; }
+    .mono { font-family: "SF Mono", "Fira Code", monospace; font-size: 12px; }
+    .stock-out { background: #fde8e8 !important; }
+    .stock-out:hover { background: #fbd5d5 !important; }
+    .stock-low { background: #fef9e7 !important; }
+    .stock-low:hover { background: #fef3cd !important; }
+    .footer {
+        text-align: center;
+        font-size: 12px;
+        color: #bdc3c7;
+        margin-top: 24px;
+        padding-top: 16px;
+        border-top: 1px solid #ecf0f1;
+    }
+    .section-label {
+        font-size: 12px;
+        color: #7f8c8d;
+        margin-bottom: 8px;
+    }
+</style>
+</head>
+<body>
+
+<div class="header">
+    <h1>MaAM Operations Dashboard</h1>
+    <div class="header-meta">
+        <span class="badge badge-mock">Mock Data</span><br>
+        Generated: Mar 14, 2026 at 12:09 PM
+    </div>
+</div>
+
+<div class="grid">
+    <!-- Fleet Status -->
+    <div class="panel">
+        <h2>Fleet Status (25 pumps)</h2>
+        <div class="chart-container">
+            <canvas id="fleetChart"></canvas>
+        </div>
+        <div class="fleet-legend">
+            
+            <div class="legend-item">
+                <span class="legend-dot" style="background:#2ecc71"></span>
+                Available: 6
+            </div>
+            <div class="legend-item">
+                <span class="legend-dot" style="background:#3498db"></span>
+                Deployed: 12
+            </div>
+            <div class="legend-item">
+                <span class="legend-dot" style="background:#f39c12"></span>
+                Consignment Stock: 5
+            </div>
+            <div class="legend-item">
+                <span class="legend-dot" style="background:#e74c3c"></span>
+                Lost: 2
+            </div>
+        </div>
+    </div>
+
+    <!-- AR Exception Queue -->
+    <div class="panel">
+        <h2>AR Exception Queue</h2>
+        <div class="ar-stats">
+            <div class="ar-stat">
+                <div class="num open">5</div>
+                <div class="label">Open</div>
+            </div>
+            <div class="ar-stat">
+                <div class="num in-progress">3</div>
+                <div class="label">In Progress</div>
+            </div>
+        </div>
+        <div class="section-label">Age Distribution (active items)</div>
+        
+            <div class="age-row">
+                <span class="age-label">< 24 hours</span>
+                <div class="age-bar-bg">
+                    <div class="age-bar" style="width:50.0%;background:#95a5a6"></div>
+                </div>
+                <span class="age-count">2</span>
+            </div>
+            <div class="age-row">
+                <span class="age-label">1-3 days</span>
+                <div class="age-bar-bg">
+                    <div class="age-bar" style="width:25.0%;background:#95a5a6"></div>
+                </div>
+                <span class="age-count">1</span>
+            </div>
+            <div class="age-row">
+                <span class="age-label">3-7 days</span>
+                <div class="age-bar-bg">
+                    <div class="age-bar" style="width:100.0%;background:#f39c12"></div>
+                </div>
+                <span class="age-count">4</span>
+            </div>
+            <div class="age-row">
+                <span class="age-label">7+ days</span>
+                <div class="age-bar-bg">
+                    <div class="age-bar" style="width:25.0%;background:#e74c3c"></div>
+                </div>
+                <span class="age-count">1</span>
+            </div>
+        <div style="margin-top: 12px;">
+            <div class="section-label">By Reason</div>
+            <span class="badge">CONSIGNMENT (2)</span> <span class="badge">GENERIC (1)</span> <span class="badge">INVOICE (2)</span> <span class="badge">PATIENT (1)</span> <span class="badge">PUMP (2)</span> 
+        </div>
+    </div>
+</div>
+
+<!-- Consignment Inventory -->
+<div class="grid">
+    <div class="panel panel-full">
+        <h2>Consignment Inventory</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Facility</th>
+                    <th>Item</th>
+                    <th>SKU</th>
+                    <th class="num">On Hand</th>
+                    <th>Last Movement</th>
+                </tr>
+            </thead>
+            <tbody>
+                
+            <tr>
+                <td>Lakewood Care Partners</td>
+                <td>Battery Pack</td>
+                <td>NPWT-BAT-STD</td>
+                <td class="num">3</td>
+                <td>2026-03-09</td>
+            </tr>
+            <tr>
+                <td>Lakewood Care Partners</td>
+                <td>Canister 350ml</td>
+                <td>NPWT-CAN-350</td>
+                <td class="num">7</td>
+                <td>2026-03-11</td>
+            </tr>
+            <tr class="stock-out">
+                <td>Lakewood Care Partners</td>
+                <td>Canister 800ml</td>
+                <td>NPWT-CAN-800</td>
+                <td class="num">0</td>
+                <td>2026-02-24</td>
+            </tr>
+            <tr class="stock-low">
+                <td>Lakewood Care Partners</td>
+                <td>NPWT Dressing Medium</td>
+                <td>NPWT-DRS-MD</td>
+                <td class="num">1</td>
+                <td>2026-03-05</td>
+            </tr>
+            <tr>
+                <td>Lakewood Care Partners</td>
+                <td>NPWT Dressing Small</td>
+                <td>NPWT-DRS-SM</td>
+                <td class="num">4</td>
+                <td>2026-03-12</td>
+            </tr>
+            <tr class="stock-out">
+                <td>Sunrise Rehabilitation Center</td>
+                <td>Battery Pack</td>
+                <td>NPWT-BAT-STD</td>
+                <td class="num">0</td>
+                <td>2026-03-02</td>
+            </tr>
+            <tr>
+                <td>Sunrise Rehabilitation Center</td>
+                <td>Canister 350ml</td>
+                <td>NPWT-CAN-350</td>
+                <td class="num">5</td>
+                <td>2026-03-13</td>
+            </tr>
+            <tr class="stock-low">
+                <td>Sunrise Rehabilitation Center</td>
+                <td>NPWT Dressing Medium</td>
+                <td>NPWT-DRS-MD</td>
+                <td class="num">2</td>
+                <td>2026-03-09</td>
+            </tr>
+            <tr>
+                <td>Sunrise Rehabilitation Center</td>
+                <td>NPWT Dressing Small</td>
+                <td>NPWT-DRS-SM</td>
+                <td class="num">8</td>
+                <td>2026-03-12</td>
+            </tr>
+            <tr class="stock-low">
+                <td>Sunrise Rehabilitation Center</td>
+                <td>Tubing Standard</td>
+                <td>NPWT-TUB-STD</td>
+                <td class="num">1</td>
+                <td>2026-03-06</td>
+            </tr>
+            <tr class="stock-low">
+                <td>Valley Medical Group</td>
+                <td>Canister 800ml</td>
+                <td>NPWT-CAN-800</td>
+                <td class="num">2</td>
+                <td>2026-03-07</td>
+            </tr>
+            <tr>
+                <td>Valley Medical Group</td>
+                <td>NPWT Dressing Large</td>
+                <td>NPWT-DRS-LG</td>
+                <td class="num">3</td>
+                <td>2026-03-08</td>
+            </tr>
+            <tr>
+                <td>Valley Medical Group</td>
+                <td>NPWT Dressing Medium</td>
+                <td>NPWT-DRS-MD</td>
+                <td class="num">6</td>
+                <td>2026-03-10</td>
+            </tr>
+            <tr>
+                <td>Valley Medical Group</td>
+                <td>NPWT Dressing Small</td>
+                <td>NPWT-DRS-SM</td>
+                <td class="num">10</td>
+                <td>2026-03-11</td>
+            </tr>
+            <tr class="stock-out">
+                <td>Valley Medical Group</td>
+                <td>Tubing Standard</td>
+                <td>NPWT-TUB-STD</td>
+                <td class="num">0</td>
+                <td>2026-02-27</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Transaction Activity + Recent Feed -->
+<div class="grid">
+    <div class="panel">
+        <h2>Transaction Activity (Last 30 Days)</h2>
+        <canvas id="txnChart" height="200"></canvas>
+    </div>
+
+    <div class="panel">
+        <h2>Recent Activity</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Facility</th>
+                    <th>Type</th>
+                    <th>Purpose</th>
+                    <th>Serial</th>
+                </tr>
+            </thead>
+            <tbody>
+                
+            <tr>
+                <td>Mar 13, 2026</td>
+                <td>Northside Physical Therapy</td>
+                <td>Pickup</td>
+                <td>Consignment Retrieval</td>
+                <td class="mono">-</td>
+            </tr>
+            <tr>
+                <td>Mar 12, 2026</td>
+                <td>Metro Wound Specialists</td>
+                <td>Pickup</td>
+                <td>Consignment Retrieval</td>
+                <td class="mono">-</td>
+            </tr>
+            <tr>
+                <td>Mar 11, 2026</td>
+                <td>Lakewood Care Partners</td>
+                <td>Pickup</td>
+                <td>Consignment Retrieval</td>
+                <td class="mono">-</td>
+            </tr>
+            <tr>
+                <td>Mar 10, 2026</td>
+                <td>Valley Medical Group</td>
+                <td>Pickup</td>
+                <td>Product Swap</td>
+                <td class="mono">PM-0002</td>
+            </tr>
+            <tr>
+                <td>Mar 09, 2026</td>
+                <td>Sunrise Rehabilitation Center</td>
+                <td>Pickup</td>
+                <td>Product Swap</td>
+                <td class="mono">PM-0001</td>
+            </tr>
+            <tr>
+                <td>Mar 08, 2026</td>
+                <td>Northside Physical Therapy</td>
+                <td>Pickup</td>
+                <td>Product Swap</td>
+                <td class="mono">PM-0025</td>
+            </tr>
+            <tr>
+                <td>Mar 07, 2026</td>
+                <td>Metro Wound Specialists</td>
+                <td>Pickup</td>
+                <td>Treatment Complete</td>
+                <td class="mono">PM-0024</td>
+            </tr>
+            <tr>
+                <td>Mar 06, 2026</td>
+                <td>Lakewood Care Partners</td>
+                <td>Pickup</td>
+                <td>Treatment Complete</td>
+                <td class="mono">PM-0023</td>
+            </tr>
+            <tr>
+                <td>Mar 05, 2026</td>
+                <td>Valley Medical Group</td>
+                <td>Pickup</td>
+                <td>Treatment Complete</td>
+                <td class="mono">PM-0022</td>
+            </tr>
+            <tr>
+                <td>Mar 04, 2026</td>
+                <td>Sunrise Rehabilitation Center</td>
+                <td>Pickup</td>
+                <td>Treatment Complete</td>
+                <td class="mono">PM-0021</td>
+            </tr>
+            <tr>
+                <td>Mar 03, 2026</td>
+                <td>Northside Physical Therapy</td>
+                <td>Pickup</td>
+                <td>Treatment Complete</td>
+                <td class="mono">PM-0020</td>
+            </tr>
+            <tr>
+                <td>Mar 02, 2026</td>
+                <td>Metro Wound Specialists</td>
+                <td>Placement</td>
+                <td>Consignment Usage</td>
+                <td class="mono">-</td>
+            </tr>
+            <tr>
+                <td>Mar 01, 2026</td>
+                <td>Lakewood Care Partners</td>
+                <td>Placement</td>
+                <td>Consignment Usage</td>
+                <td class="mono">-</td>
+            </tr>
+            <tr>
+                <td>Feb 28, 2026</td>
+                <td>Valley Medical Group</td>
+                <td>Placement</td>
+                <td>Consignment Usage</td>
+                <td class="mono">-</td>
+            </tr>
+            <tr>
+                <td>Feb 27, 2026</td>
+                <td>Sunrise Rehabilitation Center</td>
+                <td>Placement</td>
+                <td>Consignment Stocking</td>
+                <td class="mono">-</td>
+            </tr>
+            <tr>
+                <td>Feb 26, 2026</td>
+                <td>Northside Physical Therapy</td>
+                <td>Placement</td>
+                <td>Consignment Stocking</td>
+                <td class="mono">-</td>
+            </tr>
+            <tr>
+                <td>Feb 25, 2026</td>
+                <td>Metro Wound Specialists</td>
+                <td>Placement</td>
+                <td>Consignment Stocking</td>
+                <td class="mono">-</td>
+            </tr>
+            <tr>
+                <td>Feb 24, 2026</td>
+                <td>Lakewood Care Partners</td>
+                <td>Placement</td>
+                <td>Resupply</td>
+                <td class="mono">PM-0013</td>
+            </tr>
+            <tr>
+                <td>Feb 23, 2026</td>
+                <td>Valley Medical Group</td>
+                <td>Placement</td>
+                <td>Resupply</td>
+                <td class="mono">PM-0012</td>
+            </tr>
+            <tr>
+                <td>Feb 22, 2026</td>
+                <td>Sunrise Rehabilitation Center</td>
+                <td>Placement</td>
+                <td>Resupply</td>
+                <td class="mono">PM-0011</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="footer">
+    MaAM Dashboard v0.1 &middot; Data as of Mar 14, 2026 at 12:09 PM
+</div>
+
+<script>
+// Fleet Status — Donut Chart
+new Chart(document.getElementById("fleetChart"), {
+    type: "doughnut",
+    data: {
+        labels: ["Available", "Deployed", "Consignment_Stock", "Lost"],
+        datasets: [{
+            data: [6, 12, 5, 2],
+            backgroundColor: ["#2ecc71", "#3498db", "#f39c12", "#e74c3c"],
+            borderWidth: 2,
+            borderColor: "#fff",
+        }]
+    },
+    options: {
+        responsive: true,
+        cutout: "60%",
+        plugins: {
+            legend: { display: false },
+            tooltip: {
+                callbacks: {
+                    label: function(ctx) {
+                        return ctx.label.replace("_", " ") + ": " + ctx.raw;
+                    }
+                }
+            }
+        }
+    }
+});
+
+// Transaction Activity — Bar Chart
+new Chart(document.getElementById("txnChart"), {
+    type: "bar",
+    data: {
+        labels: ["Resupply", "Treatment Start", "Treatment Complete", "Consignment Stocking", "Consignment Usage", "Product Swap", "Consignment Retrieval"],
+        datasets: [{
+            data: [7, 6, 5, 3, 3, 3, 3],
+            backgroundColor: [
+                "#3498db", "#2ecc71", "#f39c12", "#e67e22",
+                "#9b59b6", "#1abc9c", "#e74c3c"
+            ],
+            borderWidth: 0,
+            borderRadius: 4,
+        }]
+    },
+    options: {
+        responsive: true,
+        plugins: {
+            legend: { display: false },
+        },
+        scales: {
+            y: {
+                beginAtZero: true,
+                ticks: { stepSize: 1, font: { size: 11 } },
+                grid: { color: "#f0f0f0" },
+            },
+            x: {
+                ticks: { font: { size: 10 }, maxRotation: 45 },
+                grid: { display: false },
+            }
+        }
+    }
+});
+</script>
+
+</body>
+</html>
