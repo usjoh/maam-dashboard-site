@@ -169,6 +169,89 @@
     .stock-out:hover { background: #fbd5d5 !important; }
     .stock-low { background: #fef9e7 !important; }
     .stock-low:hover { background: #fef3cd !important; }
+
+    /* Pump Master section */
+    .pm-section {
+        margin-bottom: 32px;
+    }
+    .pm-section-title {
+        font-size: 20px;
+        font-weight: 700;
+        color: #2c3e50;
+        margin-bottom: 16px;
+        padding-bottom: 8px;
+        border-bottom: 2px solid #2ecc71;
+    }
+    .pm-hero {
+        display: flex;
+        gap: 20px;
+        margin-bottom: 20px;
+    }
+    .pm-ratio-card {
+        background: #fff;
+        border-radius: 8px;
+        padding: 24px;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        min-width: 240px;
+        text-align: center;
+    }
+    .pm-ratio-number {
+        font-size: 48px;
+        font-weight: 800;
+        color: #3498db;
+        line-height: 1;
+    }
+    .pm-ratio-label {
+        font-size: 13px;
+        color: #7f8c8d;
+        margin-top: 8px;
+    }
+    .pm-ratio-bar {
+        margin-top: 12px;
+        height: 8px;
+        background: #ecf0f1;
+        border-radius: 4px;
+        overflow: hidden;
+    }
+    .pm-ratio-bar-fill {
+        height: 100%;
+        background: #3498db;
+        border-radius: 4px;
+        transition: width 0.3s;
+    }
+    .pm-table-card {
+        background: #fff;
+        border-radius: 8px;
+        padding: 20px;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        flex: 1;
+    }
+    .pm-table-card h2 {
+        font-size: 16px;
+        color: #34495e;
+        margin-bottom: 12px;
+        padding-bottom: 8px;
+        border-bottom: 1px solid #ecf0f1;
+    }
+    .pm-activity-wrap {
+        max-height: 340px;
+        overflow-y: auto;
+    }
+    .status-dot {
+        display: inline-block;
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        vertical-align: middle;
+    }
+    .section-divider {
+        font-size: 18px;
+        font-weight: 600;
+        color: #7f8c8d;
+        margin: 32px 0 16px;
+        padding-bottom: 8px;
+        border-bottom: 1px solid #dee2e6;
+    }
 </style>
 </head>
 <body>
@@ -176,8 +259,8 @@
 <div class="header">
     <h1>MaAM Dashboard</h1>
     <div class="header-meta">
-        <span class="badge badge-mock">Mock Data</span><br>
-        Generated: Mar 14, 2026 at 12:25 PM
+        <span class="badge badge-live">Live</span><br>
+        Last Update: Mar 21, 2026 at 02:45 PM
     </div>
 </div>
 
@@ -186,10 +269,156 @@
     <a href="finance.html">Finance</a>
 </div>
 
+<!-- ============ PUMP MASTER ============ -->
+<div class="pm-section">
+    <div class="pm-section-title">Pump Master</div>
+
+    <div class="pm-hero">
+        <!-- Fleet Ratio -->
+        <div class="pm-ratio-card">
+            <div class="pm-ratio-number">8 / 36</div>
+            <div class="pm-ratio-label">pumps deployed</div>
+            <div class="pm-ratio-bar">
+                <div class="pm-ratio-bar-fill" style="width:22%"></div>
+            </div>
+        </div>
+
+        <!-- Active Placements -->
+        <div class="pm-table-card" style="flex:2">
+            <h2>Active Placements</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Facility</th>
+                        <th>Serial</th>
+                        <th>Patient</th>
+                        <th>Last Activity</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    
+            <tr>
+                <td>134</td>
+                <td class="mono">52919</td>
+                <td>DeSouza, John</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>137</td>
+                <td class="mono">52911</td>
+                <td>Bennett, B</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>139</td>
+                <td class="mono">51672</td>
+                <td>Saieh, Roberto</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>144</td>
+                <td class="mono">46172</td>
+                <td>Edell, Richard</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>144</td>
+                <td class="mono">49414</td>
+                <td>Hecox, S</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>La Mariposa Nursing & Rehab</td>
+                <td class="mono">42982</td>
+                <td>Graves, D</td>
+                <td>Mar 04 (16d ago)</td>
+            </tr>
+            <tr>
+                <td>Marin Post Acute</td>
+                <td class="mono">52912</td>
+                <td>Morales, R</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>St Joseph Home Health</td>
+                <td class="mono">52915</td>
+                <td>Nagishe, Gina</td>
+                <td></td>
+            </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Recent Activity (color-coded) -->
+    <div class="pm-table-card">
+        <h2>Recent Activity</h2>
+        <div class="pm-activity-wrap">
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width:30px"></th>
+                        <th>Date</th>
+                        <th>Facility</th>
+                        <th>Type</th>
+                        <th>Purpose</th>
+                        <th>Serial</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    
+            <tr>
+                <td><span class="status-dot" style="background:#2ecc71" title="OK"></span></td>
+                <td>Feb 17, 2026</td>
+                <td>La Mariposa Nursing & Rehab</td>
+                <td>Pump
+Supplies</td>
+                <td>Treatment Start</td>
+                <td class="mono">42982</td>
+            </tr>
+            <tr>
+                <td><span class="status-dot" style="background:#e74c3c" title="AR Open"></span></td>
+                <td>Feb 11, 2026</td>
+                <td>127</td>
+                <td>Pump</td>
+                <td>Treatment Complete</td>
+                <td class="mono">49413</td>
+            </tr>
+            <tr>
+                <td><span class="status-dot" style="background:#e74c3c" title="AR Open"></span></td>
+                <td>Feb 11, 2026</td>
+                <td>127</td>
+                <td>Pump</td>
+                <td>Treatment Complete</td>
+                <td class="mono">49413</td>
+            </tr>
+            <tr>
+                <td><span class="status-dot" style="background:#2ecc71" title="OK"></span></td>
+                <td>Feb 04, 2026</td>
+                <td>127</td>
+                <td>Pump
+Supplies</td>
+                <td>Treatment Start</td>
+                <td class="mono">49413</td>
+            </tr>
+                </tbody>
+            </table>
+        </div>
+        <div style="margin-top:8px;font-size:11px;color:#7f8c8d">
+            <span class="status-dot" style="background:#2ecc71"></span> OK &nbsp;
+            <span class="status-dot" style="background:#f39c12"></span> AR Resolved &nbsp;
+            <span class="status-dot" style="background:#e74c3c"></span> AR Open
+        </div>
+    </div>
+</div>
+
+<!-- ============ DETAILED OPERATIONS ============ -->
+<div class="section-divider">Detailed Operations</div>
+
 <div class="grid">
     <!-- Fleet Status -->
     <div class="panel">
-        <h2>Fleet Status (25 pumps)</h2>
+        <h2>Fleet Status (36 pumps)</h2>
         <div class="chart-container">
             <canvas id="fleetChart"></canvas>
         </div>
@@ -197,15 +426,15 @@
             
             <div class="legend-item">
                 <span class="legend-dot" style="background:#2ecc71"></span>
-                Available: 6
+                Available: 22
+            </div>
+            <div class="legend-item">
+                <span class="legend-dot" style="background:#95a5a6"></span>
+                Consignment Stock: 4
             </div>
             <div class="legend-item">
                 <span class="legend-dot" style="background:#3498db"></span>
-                Deployed: 12
-            </div>
-            <div class="legend-item">
-                <span class="legend-dot" style="background:#f39c12"></span>
-                Consignment Stock: 5
+                Deployed: 8
             </div>
             <div class="legend-item">
                 <span class="legend-dot" style="background:#e74c3c"></span>
@@ -219,11 +448,11 @@
         <h2>AR Exception Queue</h2>
         <div class="ar-stats">
             <div class="ar-stat">
-                <div class="num open">5</div>
+                <div class="num open">4</div>
                 <div class="label">Open</div>
             </div>
             <div class="ar-stat">
-                <div class="num in-progress">3</div>
+                <div class="num in-progress">0</div>
                 <div class="label">In Progress</div>
             </div>
         </div>
@@ -232,34 +461,34 @@
             <div class="age-row">
                 <span class="age-label">< 24 hours</span>
                 <div class="age-bar-bg">
-                    <div class="age-bar" style="width:50.0%;background:#95a5a6"></div>
+                    <div class="age-bar" style="width:0.0%;background:#95a5a6"></div>
                 </div>
-                <span class="age-count">2</span>
+                <span class="age-count">0</span>
             </div>
             <div class="age-row">
                 <span class="age-label">1-3 days</span>
                 <div class="age-bar-bg">
-                    <div class="age-bar" style="width:25.0%;background:#95a5a6"></div>
+                    <div class="age-bar" style="width:0.0%;background:#95a5a6"></div>
                 </div>
-                <span class="age-count">1</span>
+                <span class="age-count">0</span>
             </div>
             <div class="age-row">
                 <span class="age-label">3-7 days</span>
                 <div class="age-bar-bg">
-                    <div class="age-bar" style="width:100.0%;background:#f39c12"></div>
+                    <div class="age-bar" style="width:0.0%;background:#f39c12"></div>
                 </div>
-                <span class="age-count">4</span>
+                <span class="age-count">0</span>
             </div>
             <div class="age-row">
                 <span class="age-label">7+ days</span>
                 <div class="age-bar-bg">
-                    <div class="age-bar" style="width:25.0%;background:#e74c3c"></div>
+                    <div class="age-bar" style="width:100.0%;background:#e74c3c"></div>
                 </div>
-                <span class="age-count">1</span>
+                <span class="age-count">4</span>
             </div>
         <div style="margin-top: 12px;">
             <div class="section-label">By Reason</div>
-            <span class="badge">CONSIGNMENT (2)</span> <span class="badge">GENERIC (1)</span> <span class="badge">INVOICE (2)</span> <span class="badge">PATIENT (1)</span> <span class="badge">PUMP (2)</span> 
+            <span class="badge">GENERIC (3)</span> <span class="badge">PUMP (1)</span> 
         </div>
     </div>
 </div>
@@ -281,109 +510,18 @@
             <tbody>
                 
             <tr>
-                <td>Lakewood Care Partners</td>
-                <td>Battery Pack</td>
-                <td>NPWT-BAT-STD</td>
-                <td class="num">3</td>
-                <td>2026-03-09</td>
-            </tr>
-            <tr>
-                <td>Lakewood Care Partners</td>
-                <td>Canister 350ml</td>
-                <td>NPWT-CAN-350</td>
-                <td class="num">7</td>
-                <td>2026-03-11</td>
-            </tr>
-            <tr class="stock-out">
-                <td>Lakewood Care Partners</td>
-                <td>Canister 800ml</td>
-                <td>NPWT-CAN-800</td>
-                <td class="num">0</td>
-                <td>2026-02-24</td>
-            </tr>
-            <tr class="stock-low">
-                <td>Lakewood Care Partners</td>
-                <td>NPWT Dressing Medium</td>
-                <td>NPWT-DRS-MD</td>
-                <td class="num">1</td>
-                <td>2026-03-05</td>
-            </tr>
-            <tr>
-                <td>Lakewood Care Partners</td>
-                <td>NPWT Dressing Small</td>
-                <td>NPWT-DRS-SM</td>
-                <td class="num">4</td>
-                <td>2026-03-12</td>
-            </tr>
-            <tr class="stock-out">
-                <td>Sunrise Rehabilitation Center</td>
-                <td>Battery Pack</td>
-                <td>NPWT-BAT-STD</td>
-                <td class="num">0</td>
-                <td>2026-03-02</td>
-            </tr>
-            <tr>
-                <td>Sunrise Rehabilitation Center</td>
-                <td>Canister 350ml</td>
-                <td>NPWT-CAN-350</td>
-                <td class="num">5</td>
-                <td>2026-03-13</td>
-            </tr>
-            <tr class="stock-low">
-                <td>Sunrise Rehabilitation Center</td>
-                <td>NPWT Dressing Medium</td>
-                <td>NPWT-DRS-MD</td>
-                <td class="num">2</td>
-                <td>2026-03-09</td>
-            </tr>
-            <tr>
-                <td>Sunrise Rehabilitation Center</td>
-                <td>NPWT Dressing Small</td>
-                <td>NPWT-DRS-SM</td>
-                <td class="num">8</td>
-                <td>2026-03-12</td>
-            </tr>
-            <tr class="stock-low">
-                <td>Sunrise Rehabilitation Center</td>
-                <td>Tubing Standard</td>
-                <td>NPWT-TUB-STD</td>
-                <td class="num">1</td>
-                <td>2026-03-06</td>
-            </tr>
-            <tr class="stock-low">
-                <td>Valley Medical Group</td>
-                <td>Canister 800ml</td>
-                <td>NPWT-CAN-800</td>
-                <td class="num">2</td>
-                <td>2026-03-07</td>
-            </tr>
-            <tr>
-                <td>Valley Medical Group</td>
-                <td>NPWT Dressing Large</td>
-                <td>NPWT-DRS-LG</td>
-                <td class="num">3</td>
-                <td>2026-03-08</td>
-            </tr>
-            <tr>
-                <td>Valley Medical Group</td>
-                <td>NPWT Dressing Medium</td>
-                <td>NPWT-DRS-MD</td>
-                <td class="num">6</td>
-                <td>2026-03-10</td>
-            </tr>
-            <tr>
-                <td>Valley Medical Group</td>
-                <td>NPWT Dressing Small</td>
-                <td>NPWT-DRS-SM</td>
+                <td>134</td>
+                <td>1010000018</td>
+                <td>WDK-300</td>
                 <td class="num">10</td>
-                <td>2026-03-11</td>
+                <td></td>
             </tr>
-            <tr class="stock-out">
-                <td>Valley Medical Group</td>
-                <td>Tubing Standard</td>
-                <td>NPWT-TUB-STD</td>
-                <td class="num">0</td>
-                <td>2026-02-27</td>
+            <tr>
+                <td>134</td>
+                <td>1010000033</td>
+                <td>CPC-500</td>
+                <td class="num">6</td>
+                <td></td>
             </tr>
             </tbody>
         </table>
@@ -412,144 +550,34 @@
             <tbody>
                 
             <tr>
-                <td>Mar 13, 2026</td>
-                <td>Northside Physical Therapy</td>
-                <td>Pickup</td>
-                <td>Consignment Retrieval</td>
-                <td class="mono">-</td>
+                <td>Feb 17, 2026</td>
+                <td>La Mariposa Nursing & Rehab</td>
+                <td>Pump
+Supplies</td>
+                <td>Treatment Start</td>
+                <td class="mono">42982</td>
             </tr>
             <tr>
-                <td>Mar 12, 2026</td>
-                <td>Metro Wound Specialists</td>
-                <td>Pickup</td>
-                <td>Consignment Retrieval</td>
-                <td class="mono">-</td>
-            </tr>
-            <tr>
-                <td>Mar 11, 2026</td>
-                <td>Lakewood Care Partners</td>
-                <td>Pickup</td>
-                <td>Consignment Retrieval</td>
-                <td class="mono">-</td>
-            </tr>
-            <tr>
-                <td>Mar 10, 2026</td>
-                <td>Valley Medical Group</td>
-                <td>Pickup</td>
-                <td>Product Swap</td>
-                <td class="mono">PM-0002</td>
-            </tr>
-            <tr>
-                <td>Mar 09, 2026</td>
-                <td>Sunrise Rehabilitation Center</td>
-                <td>Pickup</td>
-                <td>Product Swap</td>
-                <td class="mono">PM-0001</td>
-            </tr>
-            <tr>
-                <td>Mar 08, 2026</td>
-                <td>Northside Physical Therapy</td>
-                <td>Pickup</td>
-                <td>Product Swap</td>
-                <td class="mono">PM-0025</td>
-            </tr>
-            <tr>
-                <td>Mar 07, 2026</td>
-                <td>Metro Wound Specialists</td>
-                <td>Pickup</td>
+                <td>Feb 11, 2026</td>
+                <td>127</td>
+                <td>Pump</td>
                 <td>Treatment Complete</td>
-                <td class="mono">PM-0024</td>
+                <td class="mono">49413</td>
             </tr>
             <tr>
-                <td>Mar 06, 2026</td>
-                <td>Lakewood Care Partners</td>
-                <td>Pickup</td>
+                <td>Feb 11, 2026</td>
+                <td>127</td>
+                <td>Pump</td>
                 <td>Treatment Complete</td>
-                <td class="mono">PM-0023</td>
+                <td class="mono">49413</td>
             </tr>
             <tr>
-                <td>Mar 05, 2026</td>
-                <td>Valley Medical Group</td>
-                <td>Pickup</td>
-                <td>Treatment Complete</td>
-                <td class="mono">PM-0022</td>
-            </tr>
-            <tr>
-                <td>Mar 04, 2026</td>
-                <td>Sunrise Rehabilitation Center</td>
-                <td>Pickup</td>
-                <td>Treatment Complete</td>
-                <td class="mono">PM-0021</td>
-            </tr>
-            <tr>
-                <td>Mar 03, 2026</td>
-                <td>Northside Physical Therapy</td>
-                <td>Pickup</td>
-                <td>Treatment Complete</td>
-                <td class="mono">PM-0020</td>
-            </tr>
-            <tr>
-                <td>Mar 02, 2026</td>
-                <td>Metro Wound Specialists</td>
-                <td>Placement</td>
-                <td>Consignment Usage</td>
-                <td class="mono">-</td>
-            </tr>
-            <tr>
-                <td>Mar 01, 2026</td>
-                <td>Lakewood Care Partners</td>
-                <td>Placement</td>
-                <td>Consignment Usage</td>
-                <td class="mono">-</td>
-            </tr>
-            <tr>
-                <td>Feb 28, 2026</td>
-                <td>Valley Medical Group</td>
-                <td>Placement</td>
-                <td>Consignment Usage</td>
-                <td class="mono">-</td>
-            </tr>
-            <tr>
-                <td>Feb 27, 2026</td>
-                <td>Sunrise Rehabilitation Center</td>
-                <td>Placement</td>
-                <td>Consignment Stocking</td>
-                <td class="mono">-</td>
-            </tr>
-            <tr>
-                <td>Feb 26, 2026</td>
-                <td>Northside Physical Therapy</td>
-                <td>Placement</td>
-                <td>Consignment Stocking</td>
-                <td class="mono">-</td>
-            </tr>
-            <tr>
-                <td>Feb 25, 2026</td>
-                <td>Metro Wound Specialists</td>
-                <td>Placement</td>
-                <td>Consignment Stocking</td>
-                <td class="mono">-</td>
-            </tr>
-            <tr>
-                <td>Feb 24, 2026</td>
-                <td>Lakewood Care Partners</td>
-                <td>Placement</td>
-                <td>Resupply</td>
-                <td class="mono">PM-0013</td>
-            </tr>
-            <tr>
-                <td>Feb 23, 2026</td>
-                <td>Valley Medical Group</td>
-                <td>Placement</td>
-                <td>Resupply</td>
-                <td class="mono">PM-0012</td>
-            </tr>
-            <tr>
-                <td>Feb 22, 2026</td>
-                <td>Sunrise Rehabilitation Center</td>
-                <td>Placement</td>
-                <td>Resupply</td>
-                <td class="mono">PM-0011</td>
+                <td>Feb 04, 2026</td>
+                <td>127</td>
+                <td>Pump
+Supplies</td>
+                <td>Treatment Start</td>
+                <td class="mono">49413</td>
             </tr>
             </tbody>
         </table>
@@ -557,7 +585,7 @@
 </div>
 
 <div class="footer">
-    MaAM Dashboard v0.1 &middot; Data as of Mar 14, 2026 at 12:25 PM
+    MaAM Dashboard v0.1 &middot; Data as of Mar 21, 2026 at 02:45 PM
 </div>
 
 <script>
@@ -565,10 +593,10 @@
 new Chart(document.getElementById("fleetChart"), {
     type: "doughnut",
     data: {
-        labels: ["Available", "Deployed", "Consignment_Stock", "Lost"],
+        labels: ["Available", "Consignment Stock", "Deployed", "Lost"],
         datasets: [{
-            data: [6, 12, 5, 2],
-            backgroundColor: ["#2ecc71", "#3498db", "#f39c12", "#e74c3c"],
+            data: [22, 4, 8, 2],
+            backgroundColor: ["#2ecc71", "#95a5a6", "#3498db", "#e74c3c"],
             borderWidth: 2,
             borderColor: "#fff",
         }]
@@ -593,9 +621,9 @@ new Chart(document.getElementById("fleetChart"), {
 new Chart(document.getElementById("txnChart"), {
     type: "bar",
     data: {
-        labels: ["Resupply", "Treatment Start", "Treatment Complete", "Consignment Stocking", "Consignment Usage", "Product Swap", "Consignment Retrieval"],
+        labels: ["Treatment Start", "Treatment Complete"],
         datasets: [{
-            data: [7, 6, 5, 3, 3, 3, 3],
+            data: [2, 2],
             backgroundColor: [
                 "#3498db", "#2ecc71", "#f39c12", "#e67e22",
                 "#9b59b6", "#1abc9c", "#e74c3c"

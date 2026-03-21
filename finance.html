@@ -175,8 +175,8 @@
 <div class="header">
     <h1>MaAM Dashboard</h1>
     <div class="header-meta">
-        <span class="badge badge-mock">Mock Data</span><br>
-        Generated: Mar 14, 2026 at 12:25 PM
+        <span class="badge badge-live">Live</span><br>
+        Last Update: Mar 21, 2026 at 02:45 PM
     </div>
 </div>
 
@@ -188,27 +188,27 @@
 <!-- KPI Row -->
 <div class="kpi-row">
     <div class="kpi">
-        <div class="value blue">$1,885</div>
+        <div class="value blue">$0</div>
         <div class="label">Estimated Revenue (Last 30 Days)</div>
     </div>
     <div class="kpi">
-        <div class="value" style="color:#f39c12">75.0%</div>
-        <div class="label">Invoice Coverage (9/12 deployed pumps)</div>
+        <div class="value" style="color:#2ecc71">100.0%</div>
+        <div class="label">Invoice Coverage (8/8 deployed pumps)</div>
         <div class="coverage-bar-bg">
-            <div class="coverage-bar" style="width:75.0%;background:#f39c12"></div>
+            <div class="coverage-bar" style="width:100.0%;background:#2ecc71"></div>
         </div>
     </div>
     <div class="kpi">
-        <div class="value green">2</div>
+        <div class="value green">1</div>
         <div class="label">AvidPay Facilities</div>
         <div class="payment-split">
             <div class="payment-item">
                 <span class="payment-dot" style="background:#2ecc71"></span>
-                AvidPay: 2
+                AvidPay: 1
             </div>
             <div class="payment-item">
                 <span class="payment-dot" style="background:#95a5a6"></span>
-                Standard: 3
+                Standard: 68
             </div>
         </div>
     </div>
@@ -241,44 +241,14 @@
             <tbody>
                 
             <tr>
-                <td>NPWT Dressing Medium</td>
-                <td class="num">8</td>
-                <td class="num">$440.00</td>
+                <td>1010000033</td>
+                <td class="num">12</td>
+                <td class="num">$0.00</td>
             </tr>
             <tr>
-                <td>NPWT Dressing Large</td>
-                <td class="num">6</td>
-                <td class="num">$390.00</td>
-            </tr>
-            <tr>
-                <td>NPWT Dressing Small</td>
-                <td class="num">6</td>
-                <td class="num">$270.00</td>
-            </tr>
-            <tr>
-                <td>Canister 350ml</td>
-                <td class="num">8</td>
-                <td class="num">$240.00</td>
-            </tr>
-            <tr>
-                <td>Battery Pack</td>
-                <td class="num">7</td>
-                <td class="num">$175.00</td>
-            </tr>
-            <tr>
-                <td>Canister 800ml</td>
-                <td class="num">4</td>
-                <td class="num">$160.00</td>
-            </tr>
-            <tr>
-                <td>Tubing Standard</td>
-                <td class="num">10</td>
-                <td class="num">$150.00</td>
-            </tr>
-            <tr>
-                <td>Cleaning Kit</td>
-                <td class="num">7</td>
-                <td class="num">$84.00</td>
+                <td>1010000018</td>
+                <td class="num">20</td>
+                <td class="num">$0.00</td>
             </tr>
             </tbody>
         </table>
@@ -292,7 +262,7 @@
 </div>
 
 <div class="footer">
-    MaAM Dashboard v0.1 &middot; Data as of Mar 14, 2026 at 12:25 PM
+    MaAM Dashboard v0.1 &middot; Data as of Mar 21, 2026 at 02:45 PM
 </div>
 
 <script>
@@ -300,10 +270,10 @@
 new Chart(document.getElementById("revPeriodChart"), {
     type: "bar",
     data: {
-        labels: ["2026-02", "2026-03"],
+        labels: ["2026--02"],
         datasets: [{
             label: "Revenue ($)",
-            data: [975.0, 910.0],
+            data: [0],
             backgroundColor: "#3498db",
             borderWidth: 0,
             borderRadius: 4,
@@ -340,10 +310,10 @@ new Chart(document.getElementById("revPeriodChart"), {
 new Chart(document.getElementById("revFacilityChart"), {
     type: "bar",
     data: {
-        labels: ["Lakewood Care Partners", "Valley Medical Group", "Northside Physical Therapy", "Metro Wound Specialists", "Sunrise Rehabilitation Center"],
+        labels: ["127", "La Mariposa Nursing & Rehab"],
         datasets: [{
             label: "Revenue ($)",
-            data: [554.0, 548.5, 480.0, 446.0, -143.5],
+            data: [0, 0],
             backgroundColor: ["#3498db", "#2ecc71", "#f39c12", "#e67e22", "#9b59b6"],
             borderWidth: 0,
             borderRadius: 4,
@@ -381,9 +351,9 @@ new Chart(document.getElementById("revFacilityChart"), {
 new Chart(document.getElementById("termsChart"), {
     type: "doughnut",
     data: {
-        labels: ["Net30", "Net60", "Net15"],
+        labels: [""],
         datasets: [{
-            data: [3, 1, 1],
+            data: [69],
             backgroundColor: ["#3498db", "#2ecc71", "#f39c12", "#e67e22"],
             borderWidth: 2,
             borderColor: "#fff",
