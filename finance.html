@@ -176,7 +176,7 @@
     <h1>MaAM Dashboard</h1>
     <div class="header-meta">
         <span class="badge badge-live">Live</span><br>
-        Last Update: Mar 25, 2026 at 07:08 PM
+        Last Update: Mar 29, 2026 at 04:33 PM
     </div>
 </div>
 
@@ -193,22 +193,22 @@
     </div>
     <div class="kpi">
         <div class="value" style="color:#2ecc71">100.0%</div>
-        <div class="label">Invoice Coverage (8/8 deployed pumps)</div>
+        <div class="label">Invoice Coverage (7/7 deployed pumps)</div>
         <div class="coverage-bar-bg">
             <div class="coverage-bar" style="width:100.0%;background:#2ecc71"></div>
         </div>
     </div>
     <div class="kpi">
-        <div class="value green">1</div>
+        <div class="value green">0</div>
         <div class="label">AvidPay Facilities</div>
         <div class="payment-split">
             <div class="payment-item">
                 <span class="payment-dot" style="background:#2ecc71"></span>
-                AvidPay: 1
+                AvidPay: 0
             </div>
             <div class="payment-item">
                 <span class="payment-dot" style="background:#95a5a6"></span>
-                Standard: 68
+                Standard: 69
             </div>
         </div>
     </div>
@@ -241,28 +241,13 @@
             <tbody>
                 
             <tr>
-                <td>1010000033</td>
-                <td class="num">12</td>
-                <td class="num">$0.00</td>
-            </tr>
-            <tr>
-                <td>1010000018</td>
-                <td class="num">20</td>
-                <td class="num">$0.00</td>
-            </tr>
-            <tr>
                 <td>Accessories:Pump Accessories - Canister 500 ml</td>
-                <td class="num">47</td>
+                <td class="num">12</td>
                 <td class="num">$0.00</td>
             </tr>
             <tr>
                 <td>Accessories:Kits - Blk Sponge Dressing Kit - Medium w/1.2.3 drape 10x12</td>
-                <td class="num">50</td>
-                <td class="num">$0.00</td>
-            </tr>
-            <tr>
-                <td>Accessories:Foam - Medium Foam (Black)</td>
-                <td class="num">12</td>
+                <td class="num">20</td>
                 <td class="num">$0.00</td>
             </tr>
             </tbody>
@@ -277,7 +262,7 @@
 </div>
 
 <div class="footer">
-    MaAM Dashboard v0.1 &middot; Data as of Mar 25, 2026 at 07:08 PM
+    MaAM Dashboard v0.1 &middot; Data as of Mar 29, 2026 at 04:33 PM
 </div>
 
 <script>
@@ -285,7 +270,7 @@
 new Chart(document.getElementById("revPeriodChart"), {
     type: "bar",
     data: {
-        labels: ["2026--03"],
+        labels: ["2026--02"],
         datasets: [{
             label: "Revenue ($)",
             data: [0],
@@ -325,10 +310,10 @@ new Chart(document.getElementById("revPeriodChart"), {
 new Chart(document.getElementById("revFacilityChart"), {
     type: "bar",
     data: {
-        labels: ["Alhambra Convalescent Hospital", "Marin Post Acute", "Suncrest Home Health & Hospice"],
+        labels: ["Shields Nursing Centers - Richmond", "Central Gardens Post Acute"],
         datasets: [{
             label: "Revenue ($)",
-            data: [0, 0, 0],
+            data: [0, 0],
             backgroundColor: ["#3498db", "#2ecc71", "#f39c12", "#e67e22", "#9b59b6"],
             borderWidth: 0,
             borderRadius: 4,
